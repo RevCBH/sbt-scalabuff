@@ -4,9 +4,13 @@
 
 ## Usage
 
+First clone this repo. Then build and deploy the plugin locally:
+    
+    sbt "+ publish-local"
+
 Adding the plugin:
 
-    addSbtPlugin("com.github.sbt" %% "sbt-scalabuff" % "0.2")
+    addSbtPlugin("com.github.revcbh" %% "sbt-scalabuff" % "0.3-SNAPSHOT")
 
 Enable the plugin in your build:
 
