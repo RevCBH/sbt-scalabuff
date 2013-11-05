@@ -6,16 +6,17 @@ object ScalaBuffBuild extends Build {
     id = "root", 
     base = file("."),
     settings = Defaults.defaultSettings ++ Seq(
-      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
+      credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
       publishTo <<= (version) { version: String =>
-         val scalasbt = "http://repo.scala-sbt.org/scalasbt/"
-         val (name, url) = if (version.contains("-SNAPSHOT"))
-           ("sbt-plugin-snapshots", scalasbt+"sbt-plugin-snapshots")
-         else
-           ("sbt-plugin-releases", scalasbt+"sbt-plugin-releases")
-         Some(Resolver.url(name, new URL(url))(Resolver.ivyStylePatterns))
+        val nexus = "http://nexus.dcxft.com:8081/nexus/"
+        if (version.trim.endsWith("SNAPSHOT"))
+          Some("snapshots" at nexus + "content/repositories/buttercoin-snapshots")
+        else
+          Some("releases" at nexus + "content/repositories/buttercoin")
       },
-      publishMavenStyle := false
+      publishMavenStyle := true,
+      publishArtifact in Test := false,
+      pomIncludeRepository := { _ => false }
     )
   )
 }
